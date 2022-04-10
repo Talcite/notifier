@@ -3,7 +3,6 @@ from math import inf
 from typing import cast
 
 import pytest
-from _pytest.monkeypatch import MonkeyPatch
 from mypy_boto3_s3.service_resource import Object
 
 from notifier.database.drivers.base import BaseDatabaseDriver
@@ -15,7 +14,7 @@ from notifier.types import LocalConfig
 def test_upload_dry_run(
     notifier_config: LocalConfig,
     sample_database: BaseDatabaseDriver,
-    monkeypatch: MonkeyPatch,
+    monkeypatch: pytest.MonkeyPatch,
 ):
     """Test generating a log dump and uploading it, but without actually
     touching S3."""

@@ -19,8 +19,13 @@ def get_new_posts(
     database: BaseDatabaseDriver,
     connection: Connection,
     limit_wikis: List[str] = None,
-):
-    """For each configured wiki, retrieve and store new posts."""
+) -> Tuple[int, int]:
+    """For each configured wiki, retrieve and store new posts.
+
+    Returns a tuple containing the number of downloaded posts and the
+    number of downloaded threads."""
+    post_count = 0
+    thread_count = 0
     wikis = database.get_supported_wikis()
     if limit_wikis is not None:
         wikis = [wiki for wiki in wikis if wiki["id"] in limit_wikis]
@@ -30,7 +35,9 @@ def get_new_posts(
             continue
         logger.info("Getting new posts %s", {"for wiki_id": wiki["id"]})
         try:
-            fetch_posts_with_context(wiki["id"], database, connection)
+            new_post_count, new_thread_count = fetch_posts_with_context(
+                wiki["id"], database, connection
+            )
         except Exception as error:
             logger.error(
                 "Failed getting new posts %s",
@@ -38,13 +45,20 @@ def get_new_posts(
                 exc_info=error,
             )
             continue
+        post_count += new_post_count
+        thread_count += new_thread_count
+
+    return post_count, thread_count
 
 
 def fetch_posts_with_context(
     wiki_id: str, database: BaseDatabaseDriver, connection: Connection
-):
+) -> Tuple[int, int]:
     """Look up new posts for a wiki and then attach their context. Stores
-    the posts in the cache."""
+    the posts in the cache.
+
+    Returns a tuple of the number of posts downloaded and the number of
+    full threads crawled."""
     # Get the list of new posts from the forum's RSS
     new_posts = fetch_new_posts_rss(wiki_id)
 
@@ -167,6 +181,8 @@ def fetch_posts_with_context(
                 "cumulative_full_thread_count": len(full_threads_already_seen),
             },
         )
+
+    return len(posts_already_seen), len(full_threads_already_seen)
 
 
 def fetch_post_context(connection: Connection, wiki_id: str, thread_id: str):

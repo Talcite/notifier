@@ -40,7 +40,7 @@ def try_cache(
     store: Callable,
     do_not_store: Any = None,
     catch: Tuple[Type[Exception], ...] = None,
-) -> None:
+) -> Any:
     """Attempts to retrieve data from somewhere. If it succeeds, caches the
     data. If it fails, does nothing.
 
@@ -71,6 +71,8 @@ def try_cache(
     Functions intended to be used with this function typically either raise
     an error or return a no-op value, so `do_not_store` and `catch` should
     rarely be used together.
+
+    Returns the value returned by the `get` callable.
     """
     if catch is None:
         catch = tuple()
@@ -85,6 +87,7 @@ def try_cache(
         )
     if value != do_not_store:
         store(value)
+    return value
 
 
 class BaseDatabaseWithSqlFileCache(ABC):

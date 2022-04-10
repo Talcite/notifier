@@ -40,13 +40,14 @@ def get_user_config(
     local_config: LocalConfig,
     database: BaseDatabaseDriver,
     connection: Connection,
-):
-    """Retrieve remote user config."""
-    try_cache(
+) -> int:
+    """Retrieve remote user config. Returns the number of users."""
+    user_configs = try_cache(
         get=lambda: find_valid_user_configs(local_config, connection),
         store=database.store_user_configs,
         do_not_store=[],
     )
+    return len(user_configs)
 
 
 def find_valid_user_configs(

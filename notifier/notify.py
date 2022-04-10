@@ -97,13 +97,13 @@ def notify(
     logger.info("Getting remote config...")
     get_global_config(config, database, connection)
     logger.info("Getting user config...")
-    get_user_config(config, database, connection)
+    user_count = get_user_config(config, database, connection)
 
     # Refresh the connection to add any newly-configured wikis
     connection = Connection(config, database.get_supported_wikis())
 
     logger.info("Getting new posts...")
-    get_new_posts(database, connection, limit_wikis)
+    post_count, thread_count = get_new_posts(database, connection, limit_wikis)
 
     # Record the 'current' timestamp immediately after downloading posts
     current_timestamp = int(time.time())
@@ -120,6 +120,18 @@ def notify(
         database,
         connection,
         force_initial_search_timestamp,
+    )
+
+    logger.info("Recording activation log dump...")
+    database.store_activation_log_dump(
+        {
+            "start_timestamp": current_timestamp,
+            "end_timestamp": int(time.time()),
+            "sites_count": len(database.get_supported_wikis()),
+            "user_count": user_count,
+            "downloaded_post_count": post_count,
+            "downloaded_thread_count": thread_count,
+        }
     )
 
     logger.info("Uploading log dumps...")

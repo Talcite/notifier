@@ -29,6 +29,9 @@ from notifier.wikiconnection import Connection, RestrictedInbox
 
 logger = logging.getLogger(__name__)
 
+# pycron accepts this value but it never passes
+NEVER_CRON = "x x x x x"
+
 # Notification channels with frequency names mapping to the crontab of that
 # frequency.
 notification_channels = {
@@ -37,7 +40,8 @@ notification_channels = {
     "daily": "0 0 * * *",
     "weekly": "0 0 * * 0",
     "monthly": "0 0 1 * *",
-    "test": "x x x x x",  # pycron accepts this value but it never passes
+    "test": NEVER_CRON,
+    "local": NEVER_CRON,
 }
 
 
@@ -61,9 +65,7 @@ def pick_channels_to_notify(force_channels: List[str] = None) -> List[str]:
             {"count": len(channels), "channels": channels},
         )
     else:
-        channels = [
-            c for c in force_channels if c in notification_channels.keys()
-        ]
+        channels = [c for c in force_channels if c in notification_channels]
         logger.info(
             "Activating channels chosen manually %s",
             {"count": len(channels), "channels": channels},

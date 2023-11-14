@@ -1,0 +1,6 @@
+user_id	username	tags
+1854139	DodoDevil	restricted-inbox
+5033208	The Last Watcher	not-a-back-contact
+5657010	ZComiX	not-a-back-contact
+8051787	x1193	not-a-back-contact
+8497838	FlyPurgatorio	not-a-back-contact

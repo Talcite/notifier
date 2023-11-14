@@ -1,0 +1,11 @@
+user_id	username	tags
+2893766	Croquembouche	
+3535580	morhadow	restricted-inbox
+4317225	Wheezer	
+7282391	wolf20482	restricted-inbox
+7869175	BlueGralloy	restricted-inbox
+8051387	TrobadorFR	not-a-back-contact
+8216454	Merehrab	not-a-back-contact
+8254640	BogStandardOldMan	
+8462856	Nerdynob0dy	not-a-back-contact
+8534171	ResearcherHenryDove	not-a-back-contact

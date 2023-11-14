@@ -1,0 +1,18 @@
+user_id	username	tags
+2277479	Dr Jake Duke	not-a-back-contact
+3628082	pr0m37h3um	restricted-inbox
+4187885	Rounderhouse	
+4754680	LemanRuss1770	
+6361323	M87	
+6477976	Ireul	not-a-back-contact
+7267457	Mei Raiden	
+7566519	The_Mel0n	
+7666338	SeraphAlpha	not-a-back-contact
+7785805	DifferentHarp24	not-a-back-contact
+7857622	DrWannaBeWeather	not-a-back-contact
+8116833	SmileySonriente	not-a-back-contact
+8140507	QLMvisitor	
+8164274	SunnyTheBirb	not-a-back-contact
+8166351	ShudoWolf	
+8481833	Drpromo	not-a-back-contact
+8546184	Cow41	not-a-back-contact
